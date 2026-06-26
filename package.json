@@ -20,6 +20,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^7.2.0",
         "@tabler/core": "^1.4.0",
+        "@tabler/icons-webfont": "^3.44.0",
         "admin-lte": "^4.0.2",
         "bootstrap": "^5.3.8",
         "chart.js": "^4.5.1",
