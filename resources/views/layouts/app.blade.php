@@ -10,7 +10,7 @@
 
 <body class="bg-light">
 
-@include('layouts.navbar')
+@include('layouts.navigation')
 
 <div class="container-fluid">
     <div class="row">
