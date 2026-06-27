@@ -1,40 +1,58 @@
 <?php
 
-use App\Http\Controllers\BossController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\HolidayController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\ProfileController;
+
+/*
+|--------------------------------------------------------------------------
+| Public
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
-    return Auth::check()
-        ? redirect()->route('dashboard')
-        : redirect()->route('login');
+    return view('welcome');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    Route::resource('bosses', BossController::class);
+    /*
+    |--------------------------------------------------------------------------
+    | Events API
+    |--------------------------------------------------------------------------
+    */
 
-    Route::resource('events', EventController::class);
+    Route::get('/events', [EventController::class, 'index'])
+        ->name('events.index');
 
-    Route::resource('holidays', HolidayController::class);
+    Route::post('/events', [EventController::class, 'store'])
+        ->name('events.store');
 
-    Route::resource('users', UserController::class);
+    Route::put('/events/{event}', [EventController::class, 'update'])
+        ->name('events.update');
 
-    Route::get('/reports', [ReportController::class, 'index'])
-        ->name('reports.index');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])
+        ->name('events.destroy');
+});
 
-    Route::get('/settings', [SettingController::class, 'index'])
-        ->name('settings.index');
+/*
+|--------------------------------------------------------------------------
+| Profile
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -44,6 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+
 });
 
 require __DIR__.'/auth.php';

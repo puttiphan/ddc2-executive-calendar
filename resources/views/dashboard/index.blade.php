@@ -1,47 +1,66 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+                Executive Calendar
+            </h2>
 
-@section('content')
+            <button
+                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                + เพิ่มกิจกรรม
+            </button>
+        </div>
+    </x-slot>
 
-<h2 class="mb-4">Dashboard</h2>
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-<div class="row">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
 
-    <div class="col-md-3 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <h5>ผู้บริหาร</h5>
-                <h2>0</h2>
+                <div class="bg-white shadow rounded-lg p-5">
+                    <div class="text-sm text-gray-500">
+                        ผู้บริหาร
+                    </div>
+                    <div class="text-3xl font-bold mt-2">
+                        0
+                    </div>
+                </div>
+
+                <div class="bg-white shadow rounded-lg p-5">
+                    <div class="text-sm text-gray-500">
+                        กิจกรรมวันนี้
+                    </div>
+                    <div class="text-3xl font-bold mt-2">
+                        0
+                    </div>
+                </div>
+
+                <div class="bg-white shadow rounded-lg p-5">
+                    <div class="text-sm text-gray-500">
+                        งานด่วน
+                    </div>
+                    <div class="text-3xl font-bold mt-2">
+                        0
+                    </div>
+                </div>
+
+                <div class="bg-white shadow rounded-lg p-5">
+                    <div class="text-sm text-gray-500">
+                        วันหยุดเดือนนี้
+                    </div>
+                    <div class="text-3xl font-bold mt-2">
+                        0
+                    </div>
+                </div>
+
             </div>
+
+            <div class="bg-white shadow rounded-lg p-6">
+
+                <div id="calendar"></div>
+
+            </div>
+
         </div>
     </div>
-
-    <div class="col-md-3 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <h5>กิจกรรมวันนี้</h5>
-                <h2>0</h2>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <h5>วันหยุด</h5>
-                <h2>0</h2>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <h5>ผู้ใช้งาน</h5>
-                <h2>1</h2>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-@endsection
+</x-app-layout>
