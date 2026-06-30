@@ -18,14 +18,29 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Dashboard
+| Authenticated
 |--------------------------------------------------------------------------
 */
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard
+    |--------------------------------------------------------------------------
+    */
+
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Calendar Page
+    |--------------------------------------------------------------------------
+    */
+
+    Route::view('/calendar', 'events.index')
+        ->name('calendar');
 
     /*
     |--------------------------------------------------------------------------
@@ -44,15 +59,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('/events/{event}', [EventController::class, 'destroy'])
         ->name('events.destroy');
-});
 
-/*
-|--------------------------------------------------------------------------
-| Profile
-|--------------------------------------------------------------------------
-*/
-
-Route::middleware('auth')->group(function () {
+    /*
+    |--------------------------------------------------------------------------
+    | Profile
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -62,7 +74,11 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+    Route::get('/', function () {
+    return view('welcome');
+});
 
+Route::view('/test', 'test');
 });
 
 require __DIR__.'/auth.php';

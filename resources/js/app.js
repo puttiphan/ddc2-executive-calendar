@@ -4,15 +4,22 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
+console.log('APP.JS LOADED');
+
 window.Alpine = Alpine;
 
 Alpine.start();
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    console.log('DOM LOADED');
+
     const calendarEl = document.getElementById('calendar');
 
+    console.log('Calendar Element:', calendarEl);
+
     if (!calendarEl) {
+        console.error('Calendar element not found');
         return;
     }
 
@@ -70,7 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
+    console.log('Before calendar.render()');
+
     calendar.render();
+
+    console.log('After calendar.render()');
 
     function saveEvent(data) {
 
@@ -93,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(() => {
+
+            console.log('Event saved');
 
             calendar.refetchEvents();
 
