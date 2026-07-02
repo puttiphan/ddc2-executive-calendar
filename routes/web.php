@@ -6,6 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\Api\ExecutiveApiController;
+use App\Http\Controllers\Api\EventCategoryApiController;
+
 /*
 |--------------------------------------------------------------------------
 | Public
@@ -35,7 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Calendar Page
+    | Calendar
     |--------------------------------------------------------------------------
     */
 
@@ -48,17 +51,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/events', [EventController::class, 'index'])
-        ->name('events.index');
+    Route::resource('events', EventController::class)
+        ->only([
+            'index',
+            'store',
+            'update',
+            'destroy',
+        ]);
 
-    Route::post('/events', [EventController::class, 'store'])
-        ->name('events.store');
+    /*
+    |--------------------------------------------------------------------------
+    | Lookup API
+    |--------------------------------------------------------------------------
+    */
 
-    Route::put('/events/{event}', [EventController::class, 'update'])
-        ->name('events.update');
+    Route::prefix('api')->group(function () {
 
-    Route::delete('/events/{event}', [EventController::class, 'destroy'])
-        ->name('events.destroy');
+        Route::get('/executives', [ExecutiveApiController::class, 'index'])
+            ->name('api.executives');
+
+        Route::get('/categories', [EventCategoryApiController::class, 'index'])
+            ->name('api.categories');
+
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -74,11 +89,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
-    Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::view('/test', 'test');
 });
 
 require __DIR__.'/auth.php';
